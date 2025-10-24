@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+body {
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#author {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#score {
+    font-size: 25px;
+}
+
+#canv {
+    background-image: url("img/bg.png");
+    border: 2px solid black;
+    z-index: -1;
+}
