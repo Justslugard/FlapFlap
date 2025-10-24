@@ -28,14 +28,27 @@ const image = new Image();
 image.src = "img/birdie2.png";
 
 const overSfx = new Audio();
-overSfx.src = "audio/over.mp3"
+overSfx.src = "audio/over.mp3";
 
 // setInterval(game, 1000/30);
+ctx.font = "50px Pixelify Sans";
+ctx.fillText("Flap Flap Birdie", 25, 200);
+
+setInterval(() => {
+  ctx.font = "14px Pixelify Sans";
+  ctx.fillText("Press spacebar or mouse to start...", 25, 225);
+  setTimeout(() => {
+    ctx.clearRect(25, 210, 400, 400);
+  }, 1000)
+}, 1500)
+
+// setInterval(() => {
+// }, 1200)
 
 let trueScore = 0;
 function game() {
   let scoreNums = Number(score.textContent.split(" ")[1]);
-  ctx.clearRect(0,0,canv.width,canv.height);
+  ctx.clearRect(0, 0, canv.width, canv.height);
   vy += 0.3;
   y += vy;
 
@@ -54,12 +67,12 @@ function game() {
     ctx.fillRect(pipes[i][0] - 10, pipes[i][1] + 150, 70, 20);
     ctx.strokeRect(pipes[i][0] - 10, pipes[i][1] + 150, 70, 20);
 
-    // if (pipes[i][0] < 240 && pipes[i][0] > 160 && (pipes[i][1] > y || pipes[i][1] + 150 <= y + 30)) {
-    //   overSfx.play();
-    //   alert("Birdie ded, Skill issue");
-    //   window.location.reload();
-    //   return;
-    // }
+    if (pipes[i][0] < 240 && pipes[i][0] > 160 && (pipes[i][1] > y || pipes[i][1] + 150 <= y + 30)) {
+      overSfx.play();
+      alert("Birdie ded, Skill issue");
+      window.location.reload();
+      return;
+    }
 
     if (pipes[i][0] > (x - 17) && pipes[i][0] < x && !pipesChace.includes(pipes[i][1])) {
       pipesChace.pop();
@@ -102,6 +115,7 @@ function jump() {
   if (!isPlaying) {
     isPlaying = true;
     requestAnimationFrame(game);
+    score.style.display = "block";
   }
   vy = -4;
   jumpSfx.currentTime = 0;
