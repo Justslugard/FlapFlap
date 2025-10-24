@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -21,6 +22,11 @@ body {
 
 #score {
     font-size: 25px;
+}
+
+#narrate {
+    display: block;
+    font-size: 15px;
 }
 
 #canv {
