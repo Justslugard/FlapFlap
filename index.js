@@ -52,10 +52,11 @@ function menu() {
   }, 1500)
 }
 
-// let trueScore = 0;
 menu();
 function game() {
   if (isOver) return;
+  document.getElementById("x-axis").textContent = `X: ${x}`;
+  document.getElementById("y-axis").textContent = `Y: ${y}`;
   let scoreNums = Number(score.textContent.split(" ")[1]);
   ctx.clearRect(0, 0, canv.width, canv.height);
   vy += 0.3;
@@ -63,13 +64,13 @@ function game() {
 
   ctx.save();
 
-  ctx.translate(200, 200);
+  ctx.translate(x + 20, y + 20);
   ctx.rotate(angle);
-  ctx.drawImage(image, x - 220, y - 220, 40, 40);
+  ctx.drawImage(image, -20, -20, 40, 40);
 
   ctx.restore();
 
-  angle += Math.PI / 180 * 1;
+  angle += Math.PI / 180 * 0.5;
 
   for (i = 0; i < pipes.length; i++) {
     ctx.fillStyle = "lightgreen";
@@ -83,17 +84,24 @@ function game() {
     ctx.strokeRect(pipes[i][0], pipes[i][1] + 150, 50, 250 - pipes[i][1]);
     ctx.fillRect(pipes[i][0] - 10, pipes[i][1] + 150, 70, 20);
     ctx.strokeRect(pipes[i][0] - 10, pipes[i][1] + 150, 70, 20);
-
-    if (pipes[i][0] < 240 && pipes[i][0] > 160 && (pipes[i][1] > y || pipes[i][1] + 150 <= y + 30)) {
+    
+    if (pipes[i][0] < 220 && pipes[i][0] - 10 < 240 && pipes[i][0] > 160 && (pipes[i][1] > y || pipes[i][1] + 150 <= y + 23)) {
       // alert("Birdie ded, Skill issue");
-      overSfx.play();
-      isOver = true;
-      ctx.fillStyle = "black";
-      ctx.font = "25px Pixelify Sans";
-      ctx.fillText("Birdie ded, Diagnosis: Skill Issue", 0, 200);
-      ctx.font = "14px Pixelify Sans";
-      ctx.fillText("Press spacebar or mouse to restart...", 25, 225);
+      // overSfx.play();
+      // isOver = true;
+      // ctx.fillStyle = "black";
+      // ctx.font = "25px Pixelify Sans";
+      // ctx.fillText("Birdie ded, Diagnosis: Skill Issue", 0, 200);
+      // ctx.font = "14px Pixelify Sans";
+      // ctx.fillText("Press spacebar or mouse to restart...", 25, 225);
+      document.getElementById("hit").textContent = `HIT`;
+      alert("hit");
+    } else {
+      setTimeout(() => {
+        document.getElementById("hit").textContent = "";
+      }, 2000);
     }
+    document.getElementById("hithow").textContent = `Less than 240: ${pipes[i][0] < 240} | More than 160: ${pipes[i][0] > 160} | Pipe Y More than Y: ${pipes[i][1] > y} / Pipe Y+150 less or the same as Y+30: ${pipes[i][1] + 150 <= y + 30}`;
 
     if (pipes[i][0] > (x - 17) && pipes[i][0] < x && !pipesChace.includes(pipes[i][1])) {
       pipesChace.pop();
@@ -164,7 +172,7 @@ function jump() {
   } else if (isOver) {
     resetGame();
   } else {
-    angle = 0;
+    angle = 0.01;
     vy = -4;
     jumpSfx.currentTime = 0;
     jumpSfx.play();

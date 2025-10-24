@@ -41,3 +41,8 @@ body {
     border: 2px solid black;
     z-index: -1;
 }
+
+#debug {
+    position: absolute;
+    top: 0;
+}
