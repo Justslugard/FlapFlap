@@ -6,6 +6,7 @@ let isPlaying = false;
 let isOver = false;
 let THEscore = 0;
 let menuId;
+let angle = 0;
 
 let pipes = [
    [400, Math.floor(Math.random() * 150)],
@@ -60,7 +61,15 @@ function game() {
   vy += 0.3;
   y += vy;
 
-  ctx.drawImage(image, x, y, 40, 40);
+  ctx.save();
+
+  ctx.translate(200, 200);
+  ctx.rotate(angle);
+  ctx.drawImage(image, x - 220, y - 220, 40, 40);
+
+  ctx.restore();
+
+  angle += Math.PI / 180 * 1;
 
   for (i = 0; i < pipes.length; i++) {
     ctx.fillStyle = "lightgreen";
@@ -124,7 +133,7 @@ function resetGame() {
   ctx.clearRect(0, 0, canv.width, canv.height);
   
   x = y = 200;
-  vy = THEscore = 0;
+  vy = THEscore = angle = 0;
   pvx = 2;
   isOver = isPlaying = false;
   narrate.textContent = "";
@@ -155,6 +164,7 @@ function jump() {
   } else if (isOver) {
     resetGame();
   } else {
+    angle = 0;
     vy = -4;
     jumpSfx.currentTime = 0;
     jumpSfx.play();
