@@ -30,6 +30,9 @@ image.src = "img/birdie2.png";
 const overSfx = new Audio();
 overSfx.src = "audio/over.mp3";
 
+const levelUpSfx = new Audio();
+levelUpSfx.src = "audio/levelUp.mp3";
+
 // setInterval(game, 1000/30);
 ctx.font = "50px Pixelify Sans";
 ctx.fillText("Flap Flap Birdie", 25, 200);
@@ -94,6 +97,8 @@ function game() {
     vy =-10;
 
   if (scoreNums % 100 === 0 && scoreNums !== THEscore && scoreNums !== 0) {
+    levelUpSfx.currentTime = 0;
+    levelUpSfx.play();
     if (scoreNums < 500) narrate.textContent = "This is getting to easy huh? we shall go faster then";
     else if (scoreNums < 1500) narrate.textContent = "Bruh whattt, go get job or something. Now IT IS FASTER";
     else if (scoreNums === 1500) narrate.textContent = "Yeah idk if you are using bot or you just have a good gaming chair. Either way goodluck";
